@@ -1,0 +1,11 @@
+Select EmployeeId, FirstName, LastName, OrderID,
+Max(TotalQuantityOFOrder) AS TotalQuantityOFOrder FROM (Select
+e.employeeID AS EmployeeID, e.FirstName AS FirstName, e.LastName AS
+LastName, sub.orderId, sub.TotalQuantityOfOrder
+from Employees AS e
+JOIN Orders as o
+On e.employeeID=o.employeeId
+JOIN (select OrderID, Sum(quantity) AS TotalQuantityOFOrder FROM
+OrderDetails Group BY OrderId) AS Sub
+ON o.OrderID=sub.OrderId Order BY sub.totalQuantityOfOrder) Group By
+EmployeeID ORDER BY TotalQuantityOFOrder DESC;
