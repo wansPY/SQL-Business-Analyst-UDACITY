@@ -1,0 +1,9 @@
+select e.employeeID, e.title, e.firstname AS FirstName, e.lastname AS
+LastName, subquery.ProcessedOrderCount FROM
+Employees as e
+JOIN (select EmployeeID, Count(OrderId) AS ProcessedOrderCount FROM
+orders GROUP BY EmployeeID) AS Subquery
+ON e.employeeID=subquery.employeeID
+JOIN EmployeeTerritories AS et
+ON subquery.employeeID=et.employeeId WHERE
+ProcessedOrderCount>100 Group By e.EmployeeID;
